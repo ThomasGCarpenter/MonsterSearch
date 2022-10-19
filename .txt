@@ -1,0 +1,16 @@
+MVP 
+    User via command line can query db using certain values(CR, AC)
+    and then returns list of of matched spell casting monsters
+
+    1) create tables
+        refresh function {
+            2) api calls 
+            3) transforming data
+            4) populating tables 
+        }
+
+
+1) connect to sequelize
+2) define models 
+3) sync models 
+4) use/query data
