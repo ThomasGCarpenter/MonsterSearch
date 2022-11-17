@@ -1,27 +1,11 @@
-import express from "express";
-import pkg from "body-parser";
-import { initializeSequelize } from "./database";
+import { initializeSequelize } from "./database.js";
+import { getMonster, getSpells } from "./axios.js";
 
-const { json, urlencoded } = pkg;
-
-const app = express();
-const port = 3000;
-
-app.use(json());
-app.use(
-  urlencoded({
-    extended: true,
-  })
-);
-
-app.get("/", (request, response) => {
-  response.json({ info: "Node.js, Express, and Postgres API" });
-});
-
-app.listen(port, () => {
-  console.log(`App running on port ${port}.`);
-});
-
-let sequelize = await initializeSequelize();
-
+const sequelize = async () => {
+  await initializeSequelize();
+};
+console.log("starting");
+sequelize();
+getMonster();
+getSpells();
 export default sequelize;
