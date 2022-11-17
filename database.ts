@@ -1,6 +1,10 @@
 import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
-import path from "path";
+import Monster from "./models/monsters.js";
+import Spell from "./models/spells.js";
+
+import { initializeMonster } from "./models/monsters.js";
+import { initializeSpells } from "./models/spells.js";
 
 dotenv.config();
 
@@ -25,9 +29,13 @@ export async function initializeSequelize(): Promise<Sequelize> {
   } else {
     sequelize = new Sequelize(devDB, { dialect: "postgres" });
   }
-
   await sequelize.authenticate();
   console.log("Connection has been established successfully.");
+  initializeMonster(sequelize);
+  initializeSpells(sequelize);
+  Monster.belongsToMany(Spell, { through: "MonsterSpells" });
+  Spell.belongsToMany(Monster, { through: "MonsterSpells" });
+  await sequelize.sync({ force: true });
 
   return sequelize;
 }

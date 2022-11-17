@@ -1,16 +1,17 @@
-MVP 
-    User via command line can query db using certain values(CR, AC)
-    and then returns list of of matched spell casting monsters
+Edge Case 
 
-    1) create tables
-        refresh function {
-            2) api calls 
-            3) transforming data
-            4) populating tables 
-        }
+couldnt read property of undefined
+Error - Returned undefined for damageType
 
+solved - console.log(response.data) 
+return undefined error 
 
-1) connect to sequelize
-2) define models 
-3) sync models 
-4) use/query data
+Investigate data 
+Discovered edge case - Not all spells deal damage
+
+Solution = Validation with if statement 
+
+// checks if value was instantiated 
+!== undefined
+
+TypeError: Cannot read properties of undefined Object (reading 'spells' of that undefined object) 

@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "lib": ["ESNext"],
+    "module": "NodeNext",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true
+
+    /* ... your props ... */
+  },
+  "include": ["axios.ts", "index.ts", "database.ts"],
+  "exclude": ["node_modules"],
+  "ts-node": {
+    "esm": true,
+    "swc": true,
+    "require": ["tsconfig-paths/register"]
+  }
+}
