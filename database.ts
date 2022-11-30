@@ -1,4 +1,4 @@
-import { Sequelize } from "sequelize";
+import { Sequelize, QueryTypes } from "sequelize";
 import dotenv from "dotenv";
 import Monster from "./models/monsters.js";
 import Spell from "./models/spells.js";
@@ -31,10 +31,11 @@ export async function initializeSequelize(): Promise<Sequelize> {
   }
   await sequelize.authenticate();
   console.log("Connection has been established successfully.");
-  initializeMonster(sequelize);
-  initializeSpells(sequelize);
-  Monster.belongsToMany(Spell, { through: "MonsterSpells" });
-  Spell.belongsToMany(Monster, { through: "MonsterSpells" });
+
+  await initializeMonster(sequelize);
+  await initializeSpells(sequelize);
+  Monster.belongsToMany(Spell, { through: "MonsterSpell" });
+  Spell.belongsToMany(Monster, { through: "MonsterSpell" });
   await sequelize.sync({ force: true });
 
   return sequelize;

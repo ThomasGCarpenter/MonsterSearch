@@ -21,8 +21,8 @@ import sequelize from "../index.js";
 import Spell from "./spells.js";
 
 export class Monster extends Model<
-  InferAttributes<Monster, { omit: "spells" }>,
-  InferCreationAttributes<Monster, { omit: "spells" }>
+  InferAttributes<Monster>,
+  InferCreationAttributes<Monster>
 > {
   declare id: CreationOptional<number>;
   declare createdAt: CreationOptional<Date>;
@@ -30,7 +30,6 @@ export class Monster extends Model<
   declare name: string;
   declare challengeRating: number;
   declare armorClass: number;
-  declare spells: string;
 
   declare getSpells: HasManyGetAssociationsMixin<Spell>; // Note the null assertions!
   declare addSpell: HasManyAddAssociationMixin<Spell, number>;
@@ -41,12 +40,10 @@ export class Monster extends Model<
   declare hasSpell: HasManyHasAssociationMixin<Spell, number>;
   declare hasSpells: HasManyHasAssociationsMixin<Spell, number>;
   declare countSpells: HasManyCountAssociationsMixin;
-
-  declare static associations: {
-    spells: Association<Monster, Spell>;
-  };
 }
-export function initializeMonster(sequelize: Sequelize.Sequelize): void {
+export async function initializeMonster(
+  sequelize: Sequelize.Sequelize
+): Promise<void> {
   Monster.init(
     {
       id: {
@@ -71,17 +68,12 @@ export function initializeMonster(sequelize: Sequelize.Sequelize): void {
     },
     {
       sequelize,
+      tableName: "Monsters",
     }
   );
 }
 
 export default Monster;
 
-//outer & inner joins
-
-//Select *
-// From Monsters as m
-// JOIN MonstersSpells AS ms ON m.Id = ms.MonsterId
-// JOIN Spells AS s on ms.SpellId = s.Id
-// WHERE m.CR > 3
-// AND s.AttackType = "Acid"
+//From Spells
+// if
