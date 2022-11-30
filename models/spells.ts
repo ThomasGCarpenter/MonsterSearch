@@ -39,7 +39,9 @@ export class Spells extends Model<
   // declare hasProjects: HasManyHasAssociationsMixin<Spell, number>;
   // declare countProjects: HasManyCountAssociationsMixin;
 }
-export function initializeSpells(sequelize: Sequelize.Sequelize): void {
+export async function initializeSpells(
+  sequelize: Sequelize.Sequelize
+): Promise<void> {
   Spells.init(
     {
       id: {
