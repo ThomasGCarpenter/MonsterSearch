@@ -12,12 +12,10 @@ export async function getMonster() {
         const monsterResponse = await axios.get(
           `https://www.dnd5eapi.co${monster.url}`
         );
-        console.log("MonsterName", monsterResponse.data.name);
         const specAbilites = monsterResponse.data.special_abilities;
         let spellNames = [];
         specAbilites.forEach((ability: { spellcasting: { spells: any[] } }) => {
           if (ability.spellcasting !== undefined) {
-            console.log("Ability", ability);
             ability.spellcasting.spells.forEach((name) =>
               spellNames.push(name.name)
             );
@@ -73,7 +71,6 @@ export async function getSpells() {
             damageType: spellResponse.data.damage.damage_type.name,
           });
           spellPost.save();
-          console.log("spell saved muy bueno!");
         }
       }
     );

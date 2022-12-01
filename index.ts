@@ -11,7 +11,6 @@ const sequelize = async () => {
 
 async function letsGo() {
   try {
-    console.log("starting");
     await sequelize();
     await getSpells();
     await getMonster();
@@ -29,13 +28,13 @@ async function queryFunc() {
   const users = await Monster.findAll({
     where: {
       challengeRating: {
-        [Op.gt]: 1,
+        [Op.gt]: `${process.argv[2]}`,
       },
     },
     include: {
       model: Spell,
       where: {
-        damageType: "Necrotic",
+        damageType: `${process.argv[3]}`,
       },
     },
   });
