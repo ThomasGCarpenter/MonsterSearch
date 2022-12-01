@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import Monster from "./models/monsters.js";
+import Monster from './models/monsters.js';
 import Spell from "./models/spells.js";
 
 export async function getMonster() {
@@ -14,11 +14,8 @@ export async function getMonster() {
       var spellNames = [];
       specAbilites.forEach((ability) => {
         if (ability.spellcasting !== undefined) {
-          // spellNames = specAbilites.map((name) => name.spellcasting);
-
           spellNames = ability.spellcasting.spells.map((name) => name.name);
         }
-        console.log("Loooooooooooooooooooooooooooook", spellNames);
       });
 
       let monsterPost = Monster.build({
