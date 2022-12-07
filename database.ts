@@ -1,7 +1,14 @@
+<<<<<<< eslint
 import { Sequelize } from 'sequelize'
 import dotenv from 'dotenv'
 import Monster, { initializeMonster } from './models/monsters.js'
 import Spell, { initializeSpells } from './models/spells.js'
+=======
+import { Sequelize, QueryTypes } from "sequelize";
+import dotenv from "dotenv";
+import Monster from "./models/monsters.js";
+import Spell from "./models/spells.js";
+>>>>>>> master
 
 dotenv.config()
 
@@ -26,6 +33,7 @@ export async function initializeSequelize (): Promise<Sequelize> {
   } else {
     sequelize = new Sequelize(devDB, { dialect: 'postgres' })
   }
+<<<<<<< eslint
   await sequelize.authenticate()
   console.log('Connection has been established successfully.')
   initializeMonster(sequelize)
@@ -33,6 +41,16 @@ export async function initializeSequelize (): Promise<Sequelize> {
   Monster.belongsToMany(Spell, { through: 'MonsterSpells' })
   Spell.belongsToMany(Monster, { through: 'MonsterSpells' })
   await sequelize.sync({ force: true })
+=======
+  await sequelize.authenticate();
+  console.log("Connection has been established successfully.");
+
+  await initializeMonster(sequelize);
+  await initializeSpells(sequelize);
+  Monster.belongsToMany(Spell, { through: "MonsterSpell" });
+  Spell.belongsToMany(Monster, { through: "MonsterSpell" });
+  await sequelize.sync({ force: true });
+>>>>>>> master
 
   return sequelize
 }
