@@ -1,33 +1,22 @@
 import Sequelize, {
   CreationOptional,
   DataTypes,
-  HasManyAddAssociationMixin,
-  HasManyAddAssociationsMixin,
-  HasManyCountAssociationsMixin,
-  HasManyCreateAssociationMixin,
-  HasManyGetAssociationsMixin,
-  HasManyHasAssociationMixin,
-  HasManyHasAssociationsMixin,
-  HasManyRemoveAssociationMixin,
-  HasManyRemoveAssociationsMixin,
-  HasManySetAssociationsMixin,
   InferAttributes,
   InferCreationAttributes,
-  Model,
-} from "sequelize";
-import sequelize from "../index.js";
+  Model
+} from 'sequelize'
 
 export class Spells extends Model<
-  InferAttributes<Spells>,
-  InferCreationAttributes<Spells>
+InferAttributes<Spells>,
+InferCreationAttributes<Spells>
 > {
-  declare id: CreationOptional<number>;
-  declare createdAt: CreationOptional<Date>;
-  declare updatedAt: CreationOptional<Date>;
-  declare name: string;
-  declare level: number;
-  declare concentration: boolean;
-  declare damageType: string;
+  declare id: CreationOptional<number>
+  declare createdAt: CreationOptional<Date>
+  declare updatedAt: CreationOptional<Date>
+  declare name: string
+  declare level: number
+  declare concentration: boolean
+  declare damageType: string
 
   // declare getProjects: HasManyGetAssociationsMixin<Spell>; // Note the null assertions!
   // declare addProject: HasManyAddAssociationMixin<Spell, number>;
@@ -39,39 +28,37 @@ export class Spells extends Model<
   // declare hasProjects: HasManyHasAssociationsMixin<Spell, number>;
   // declare countProjects: HasManyCountAssociationsMixin;
 }
-export function initializeSpells(sequelize: Sequelize.Sequelize): void {
+export function initializeSpells (sequelize: Sequelize.Sequelize): void {
   Spells.init(
     {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
-        primaryKey: true,
+        primaryKey: true
       },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
       name: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
         // allowNull: false,
       },
       level: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
         // allowNull: false,
       },
       concentration: {
-        type: Sequelize.BOOLEAN,
+        type: Sequelize.BOOLEAN
         // allowNull: false,
       },
       damageType: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
         // allowNull: false,
-      },
+      }
     },
     {
-      sequelize,
+      sequelize
     }
-  );
+  )
 }
 
-export default Spells;
-
-//
+export default Spells

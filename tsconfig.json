@@ -4,7 +4,8 @@
     "module": "NodeNext",
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "strictNullChecks": true
 
     /* ... your props ... */
   },
