@@ -5,7 +5,6 @@ import Sequelize, {
   HasManyAddAssociationMixin,
   HasManyAddAssociationsMixin,
   HasManyCountAssociationsMixin,
-  HasManyCreateAssociationMixin,
   HasManyGetAssociationsMixin,
   HasManyHasAssociationMixin,
   HasManyHasAssociationsMixin,
@@ -14,66 +13,64 @@ import Sequelize, {
   HasManySetAssociationsMixin,
   InferAttributes,
   InferCreationAttributes,
-  Model,
-} from "sequelize";
-import sequelize from "../index.js";
+  Model
+} from 'sequelize'
 
-import Spell from "./spells.js";
+import Spell from './spells.js'
 
 export class Monster extends Model<
-  InferAttributes<Monster>,
-  InferCreationAttributes<Monster>
+InferAttributes<Monster, { omit: 'spells' }>,
+InferCreationAttributes<Monster, { omit: 'spells' }>
 > {
-  declare id: CreationOptional<number>;
-  declare createdAt: CreationOptional<Date>;
-  declare updatedAt: CreationOptional<Date>;
-  declare name: string;
-  declare challengeRating: number;
-  declare armorClass: number;
+  declare id: CreationOptional<number>
+  declare createdAt: CreationOptional<Date>
+  declare updatedAt: CreationOptional<Date>
+  declare name: string
+  declare challengeRating: number
+  declare armorClass: number
+  declare spells: string
 
-  declare getSpells: HasManyGetAssociationsMixin<Spell>; // Note the null assertions!
-  declare addSpell: HasManyAddAssociationMixin<Spell, number>;
-  declare addSpells: HasManyAddAssociationsMixin<Spell, number>;
-  declare setSpells: HasManySetAssociationsMixin<Spell, number>;
-  declare removeSpell: HasManyRemoveAssociationMixin<Spell, number>;
-  declare removeSpells: HasManyRemoveAssociationsMixin<Spell, number>;
-  declare hasSpell: HasManyHasAssociationMixin<Spell, number>;
-  declare hasSpells: HasManyHasAssociationsMixin<Spell, number>;
-  declare countSpells: HasManyCountAssociationsMixin;
+  declare getSpells: HasManyGetAssociationsMixin<Spell> // Note the null assertions!
+  declare addSpell: HasManyAddAssociationMixin<Spell, number>
+  declare addSpells: HasManyAddAssociationsMixin<Spell, number>
+  declare setSpells: HasManySetAssociationsMixin<Spell, number>
+  declare removeSpell: HasManyRemoveAssociationMixin<Spell, number>
+  declare removeSpells: HasManyRemoveAssociationsMixin<Spell, number>
+  declare hasSpell: HasManyHasAssociationMixin<Spell, number>
+  declare hasSpells: HasManyHasAssociationsMixin<Spell, number>
+  declare countSpells: HasManyCountAssociationsMixin
+
+  declare static associations: {
+    spells: Association<Monster, Spell>
+  }
 }
-export async function initializeMonster(
-  sequelize: Sequelize.Sequelize
-): Promise<void> {
+export function initializeMonster (sequelize: Sequelize.Sequelize): void {
   Monster.init(
     {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
-        primaryKey: true,
+        primaryKey: true
       },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
       name: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
         // allowNull: false,
       },
       challengeRating: {
-        type: Sequelize.FLOAT,
+        type: Sequelize.FLOAT
         // allowNull: false,
       },
       armorClass: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
         // allowNull: false,
-      },
+      }
     },
     {
-      sequelize,
-      tableName: "Monsters",
+      sequelize
     }
-  );
+  )
 }
 
-export default Monster;
-
-//From Spells
-// if
+export default Monster
