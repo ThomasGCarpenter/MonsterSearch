@@ -9,7 +9,7 @@
 
     /* ... your props ... */
   },
-  "include": ["axios.ts", "index.ts", "database.ts"],
+  "include": ["axios.ts", "index.ts", ".eslint.cjs", "database.ts"],
   "exclude": ["node_modules"],
   "ts-node": {
     "esm": true,

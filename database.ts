@@ -1,17 +1,19 @@
-import { Sequelize } from 'sequelize'
-import dotenv from 'dotenv'
-import Monster, { initializeMonster } from './models/monsters.js'
-import Spell, { initializeSpells } from './models/spells.js'
+import { Sequelize } from 'sequelize';
+import dotenv from 'dotenv';
+import Monster, { initializeMonster } from './models/monsters.js';
+import Spell, { initializeSpells } from './models/spells.js';
 
-dotenv.config()
+dotenv.config();
 
-let devDB = ''
+let devDB = '';
 if (process.env.DEV_DATABASE_URL !== undefined) {
-  devDB = process.env.DEV_DATABASE_URL
+  devDB = process.env.DEV_DATABASE_URL;
 }
 
-export async function initializeSequelize (): Promise<Sequelize> {
-  let sequelize: Sequelize
+export async function initializeSequelize(
+  booleanVariable: boolean
+): Promise<Sequelize> {
+  let sequelize: Sequelize;
   // this if for future use with Heroku, currently only support devdb
   if (process.env.DATABASE_URL !== undefined) {
     sequelize = new Sequelize(process.env.DATABASE_URL, {
@@ -19,20 +21,22 @@ export async function initializeSequelize (): Promise<Sequelize> {
       dialectOptions: {
         ssl: {
           require: true,
-          rejectUnauthorized: false
-        }
-      }
-    })
+          rejectUnauthorized: false,
+        },
+      },
+    });
   } else {
-    sequelize = new Sequelize(devDB, { dialect: 'postgres' })
+    sequelize = new Sequelize(devDB, { dialect: 'postgres' });
   }
-  await sequelize.authenticate()
-  console.log('Connection has been established successfully.')
-  initializeMonster(sequelize)
-  initializeSpells(sequelize)
-  Monster.belongsToMany(Spell, { through: 'MonsterSpells' })
-  Spell.belongsToMany(Monster, { through: 'MonsterSpells' })
-  await sequelize.sync({ force: true })
+  await sequelize.authenticate();
+  console.log('Connection has been established successfully.');
+  initializeMonster(sequelize);
+  initializeSpells(sequelize);
+  Monster.belongsToMany(Spell, { through: 'MonsterSpells' });
+  Spell.belongsToMany(Monster, { through: 'MonsterSpells' });
+  await sequelize.sync({ force: booleanVariable });
 
-  return sequelize
+  return sequelize;
 }
+
+//
