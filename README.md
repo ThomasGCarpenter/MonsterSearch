@@ -1,6 +1,6 @@
 # MonsterSearch
 
-MonsterSearch is a personal project built for educational purposes. Using the [D&D API](https://www.dnd5eapi.co/), you can filter for monsters who have spellcasting abilities based on their challenge rating and spell damage type.
+MonsterSearch is a personal project built for educational purposes. Using the [D&D API](https://www.dnd5eapi.co/), you can filter for monsters who have spellcasting abilities based on their challenge rating and spell damage type. 
 
 ## Up and Running
 
@@ -16,7 +16,7 @@ MonsterSearch is a personal project built for educational purposes. Using the [D
 Example Command.
 
 ```
-ts-node index.ts --challenge-rating 2 --damage-type Radiant --csv csvFileexampleName -db
+ts-node index.ts --cr 2 --dt Radiant --csv csvFileexampleName -db
 
 ```
 The -db command will populate the database. You will want to pass it as an argument the first time to initialize the database and afterwards it is not obligatory unless you want to re-populate the database. 
