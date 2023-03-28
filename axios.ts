@@ -97,12 +97,12 @@ export async function populateMonsterTable(): Promise<void> {
         const monsterResponse = await getMonster(monster.url);
         const monsterIsBuilt = await buildMonster(monsterResponse);
 
-        const hereIGoFilteringAgain = monsterResponse?.special_abilities.find(
+        const filterMonstersforSpells = monsterResponse?.special_abilities.find(
           (element) => element.spellcasting
         );
 
-        if (hereIGoFilteringAgain !== undefined) {
-          hereIGoFilteringAgain.spellcasting.spells.forEach((spell) =>
+        if (filterMonstersforSpells !== undefined) {
+          filterMonstersforSpells.spellcasting.spells.forEach((spell) =>
             spellNames.push(spell.name)
           );
         }
