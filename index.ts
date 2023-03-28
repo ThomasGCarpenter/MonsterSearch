@@ -10,9 +10,9 @@ import { program } from '@commander-js/extra-typings';
 import * as fs from 'fs';
 
 interface Options {
-  challengeRating: number;
-  damageType: string;
-  csvFileName: string;
+  cr: number;
+  dt: string;
+  csv: string;
   Db: boolean;
 }
 
@@ -24,9 +24,9 @@ interface CsvFile {
 }
 
 program
-  .option('--challenge-rating <number>')
-  .option('--damage-type <type>')
-  .option('--csv-file-name <string>')
+  .option('--cr <number>')
+  .option('--dt <type>')
+  .option('--csv <string>')
   .option('-db', 'refresh database', false)
   .description(
     `Query challenge rating by entering number 0.125, 0.5, 0.175, or whole numbers 1 - 30. Then enter spell damage type.
@@ -35,13 +35,13 @@ program
   .parse();
 
 const options = program.opts() as Options;
-const damageType = options.damageType;
+const damageType = options.dt;
 
 const damageTypeCapitalized =
   damageType.charAt(0).toUpperCase() + damageType.slice(1);
 
 isDamageTypeValid(damageTypeCapitalized);
-isChallengeRatingValid(options.challengeRating);
+isChallengeRatingValid(options.cr);
 
 void (async function queryFunc() {
   try {
@@ -54,7 +54,7 @@ void (async function queryFunc() {
     const results = await Monster.findAll({
       where: {
         challengeRating: {
-          [Op.gt]: `${options.challengeRating}`,
+          [Op.gt]: `${options.cr}`,
         },
       },
       include: {
@@ -70,16 +70,16 @@ void (async function queryFunc() {
       const spellArray = element.Spells.map((element) => {
         return element.name;
       });
-      const objectToPush = {
+      const dataForCSV = {
         name: element.name,
         challengeRating: element.challengeRating,
         armorClass: element.armorClass,
         Spells: spellArray,
       };
-      csv.push(objectToPush);
+      csv.push(dataForCSV);
     });
     const convertedToCsv = toCsv(pivot(csv));
-    fs.appendFileSync(`./${options.csvFileName}.csv`, convertedToCsv);
+    fs.appendFileSync(`./${options.csv}.csv`, convertedToCsv);
 
     return csv;
   } catch (err) {
@@ -150,6 +150,3 @@ function isChallengeRatingValid(challengeRating) {
   }
   return true;
 }
-
-// let user specify output folder
-// let user specify file name
